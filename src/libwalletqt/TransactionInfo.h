@@ -4,8 +4,7 @@
 #include <wallet/api/wallet2_api.h>
 #include <QObject>
 #include <QDateTime>
-
-class Transfer;
+#include "Transfer.h"
 
 class TransactionInfo : public QObject
 {

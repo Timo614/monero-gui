@@ -1,6 +1,5 @@
 #include "TransactionInfo.h"
 #include "WalletManager.h"
-#include "Transfer.h"
 #include <QDateTime>
 #include <QDebug>
 
@@ -103,7 +102,7 @@ QList<Transfer*> TransactionInfo::transfers() const
 
     for(auto const& t: m_pimpl->transfers()) {
         TransactionInfo * parent = const_cast<TransactionInfo*>(this);
-        Transfer * transfer = new Transfer(t.amount, QString::fromStdString(t.address), parent);
+        Transfer * transfer = new Transfer(t->amount(), QString::fromStdString(t->address()), parent);
         m_transfers.append(transfer);
     }
     return m_transfers;

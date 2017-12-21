@@ -537,21 +537,21 @@ Rectangle {
                 // deleting transaction object, we don't want memleaks
                 transaction.destroy();
             } else {
-                    confirmationDialog.text =  qsTr("\nNumber of transactions: ") + transaction.txCount
+                confirmationDialog.text = qsTr("<br><b>Number of transactions:</b> #%1<br>").arg(transaction.txCount)
+
                 for (var i = 0; i < transaction.txCount; ++i) {
-                    confirmationDialog.text += qsTr("\nTransaction #%1").arg(i+1)
-                    +qsTr("\nRecipient: ") + transaction.recipientAddress[i]
-                    + (transaction.paymentId[i] == "" ? "" : qsTr("\n\payment ID: ") + transaction.paymentId[i])
-                    + qsTr("\nAmount: ") + walletManager.displayAmount(transaction.amount(i))
-                    + qsTr("\nFee: ") + walletManager.displayAmount(transaction.fee(i))
-                    + qsTr("\nRingsize: ") + transaction.mixin(i+1)
+                    if (i > 0)
+                        confirmationDialog.text += "<br>";
+
+                    confirmationDialog.text += qsTr("<b>Transaction #%1</b>").arg(i+1)
+                    + (transaction.paymentId[i] == "" ? "" : qsTr("<br><b>payment ID:</b> ") + transaction.paymentId[i])
+                    + qsTr("<br><b>Destinations:</b> <br>") + transaction.destinations_formatted(i)
+                    + qsTr("<br><b>Fee:</b> ") + walletManager.displayAmount(transaction.fee(i))
+                    + qsTr("<br><b>Ringsize:</b> ") + transaction.mixin(i+1)
 
                     // TODO: add descriptions to unsigned_tx_set?
-    //              + (transactionDescription === "" ? "" : (qsTr("\n\nDescription: ") + transactionDescription))
+    //              + (transactionDescription === "" ? "" : (qsTr("<br><br><b>Description:</b> ") + transactionDescription))
                     + translationManager.emptyString
-                    if (i > 0) {
-                        confirmationDialog.text += "\n\n"
-                    }
 
                 }
 
